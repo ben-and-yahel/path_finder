@@ -144,15 +144,34 @@ function ExpandArray(ExpendedNode)
 function sortByFcost(nodeArray)
 {
     for (let X = 0; X < nodeArray.length; X++) {
-        for (let Y = 1; Y < nodeArray.length; Y++) {
-            if(nodeArray[X].point.F_cost > nodeArray[Y].point.F_cost)
+        for (let Y = 0; Y < nodeArray.length - 1; Y++) {
+            if(nodeArray[Y].point.F_cost > nodeArray[Y + 1].point.F_cost)
             {
-                let temp = nodeArray[x];
-                nodeArray[X] = nodeArray[Y];
+                let temp = nodeArray[Y + 1];
+                nodeArray[Y + 1] = nodeArray[Y];
+                nodeArray[Y] = temp;
+            }
+            else if((nodeArray[Y].point.F_cost == nodeArray[Y + 1].point.F_cost) && (nodeArray[Y].point.H_cost < nodeArray[Y + 1].point.H_cost))
+            {
+                let temp = nodeArray[Y + 1];
+                nodeArray[Y + 1] = nodeArray[Y];
                 nodeArray[Y] = temp;
             }
         }
     }
+    let f = nodeArray[0].point.F_cost;
+    for (let X = 0; X < nodeArray.length; X++) {
+        for (let Y = 0; Y < nodeArray.length - 1; Y++) {
+            if((nodeArray[Y].point.F_cost == f) && (nodeArray[Y].point.H_cost > nodeArray[Y + 1].point.H_cost))
+            {
+                let temp = nodeArray[Y + 1];
+                nodeArray[Y + 1] = nodeArray[Y];
+                nodeArray[Y] = temp;
+            }
+            
+        }
+    }
+    return nodeArray;
 }
 function A_algorithem()
 {
@@ -162,11 +181,14 @@ function A_algorithem()
     var exit = true;
     while(exit)
     {
-        tempNodeArray = []
-        NodesArray.forEach(n => {
-            tempNodeArray.push.apply(tempNodeArray,ExpandArray(n));
-        });
-        NodesArray = tempNodeArray;
+        if(NodesArray.length == 0){
+        exit = false;
+        continue;
+    }
+        NodesArray = sortByFcost(NodesArray);
+        tempNodeArray = ExpandArray(NodesArray[0]);
+        console.log(NodesArray.splice(0,1));
+        NodesArray.push.apply(NodesArray,tempNodeArray);
         NodesArray.forEach(n => {
             squars[n.point.x][n.point.y] = "pink"
             if(n.point.x == end.x && n.point.y == end.y){
@@ -193,6 +215,10 @@ function draw_path(e) {
     //j = line
     //the if is the core. for changing to line enter j ext...
     //alert(start + " "+end);
+    if(result == null)
+        return;
+    result = result.node;
+    squars[end.x][end.y] = "red";
     while(result.node)
     {
         squars[result.point.x][result.point.y] = "#00ffcc";  
