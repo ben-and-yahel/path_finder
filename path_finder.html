@@ -72,43 +72,30 @@ function sleep(milliseconds) {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
 }
-
+/*
+calculate the distance between 2 points
+*/
 function distance(A,B)
 {
     return Math.floor(Math.sqrt((Math.pow(A.x-B.x,2)+Math.pow(A.y-B.y,2))))*10;
 }
+/*
+calculate the distance between the start point and another point
+*/
 function calculateGcost(P)
 {
     return distance(P,start)
 }
+/*
+calculate the distance between the end point and another point
+*/
 function calculateHcost(P)
 {
     return distance(P,end)
 }
-function beenThere1D(p,pArray)
-{
-    var x = 0;
-    pArray.forEach(point => {
-            if(point.x == p.x && point.y == p.y)
-                return x;
-            x++
-    });
-    return -1;
-}
-function beenThere2D(p,pArray)
-{
-    var x = 0;
-    var y = 0;
-    pArray.forEach(point => {
-        pArray.forEach(inPoint =>{
-            if(inPoint.x == p.x && inPoint.y == p.y)
-                return new Point(x,y);
-            y++;
-        });
-        x++;
-    });
-    return new Point(-1,-1);
-}
+/*
+go through a node and search for a givven point
+*/
 function haventBeenThere(x,y,ExpendedNode)
 {
     let curr = ExpendedNode;
@@ -121,6 +108,10 @@ function haventBeenThere(x,y,ExpendedNode)
 
     return true;
 }
+/*
+expanding searching area
+return an array of nodes
+*/
 function ExpandArray(ExpendedNode)
 {
     let NodesArray = [];
@@ -128,6 +119,7 @@ function ExpandArray(ExpendedNode)
     let height = squars[0].length;
     let x = ExpendedNode.point.x;
     let y = ExpendedNode.point.y;
+    //check if posible to go there and then create and push a new node
     if(x-1 >= 0 && squars[x-1][y] != "black" && haventBeenThere(x-1,y,ExpendedNode))
         NodesArray.push(new Node(new Point(x-1,y,"green"),ExpendedNode));
     if(x+1 < width && squars[x+1][y] != "black" && haventBeenThere(x+1,y,ExpendedNode))
@@ -141,6 +133,10 @@ function ExpandArray(ExpendedNode)
         
     return NodesArray;
 }
+/*
+sorting the nodes by their F cost
+then by their H cost
+*/
 function sortByFcost(nodeArray)
 {
     for (let X = 0; X < nodeArray.length; X++) {
@@ -173,24 +169,30 @@ function sortByFcost(nodeArray)
     }
     return nodeArray;
 }
-function A_algorithem()
+/*
+main function of the algorithm
+using linked list
+*/
+function A_algorithm()
 {
     let startNode = new Node(start,null);
-    let NodesArray = ExpandArray(startNode);
+    let NodesArray = ExpandArray(startNode);//initiate the nodews array with the start point
     let bestTrace = null;
     var exit = true;
     while(exit)
     {
         if(NodesArray.length == 0){
-        exit = false;
-        continue;
-    }
-        NodesArray = sortByFcost(NodesArray);
+            exit = false;
+            squars[end.x][end.y] = "yellow"
+            squars[start.x][start.y] = "yellow"
+            continue;
+        }
+        NodesArray = sortByFcost(NodesArray);//searching for the closest
         tempNodeArray = ExpandArray(NodesArray[0]);
         console.log(NodesArray.splice(0,1));
-        NodesArray.push.apply(NodesArray,tempNodeArray);
-        NodesArray.forEach(n => {
-            squars[n.point.x][n.point.y] = "pink"
+        NodesArray.push.apply(NodesArray,tempNodeArray);//adding next gen
+        NodesArray.forEach(n => {//making progress, sign it and check if finish
+            squars[n.point.x][n.point.y] = "#123456";
             if(n.point.x == end.x && n.point.y == end.y){
                 bestTrace = n; 
                 exit = false;
@@ -210,13 +212,15 @@ function draw_path(e) {
     //         break;
     // }
 
-    let result = A_algorithem();
+    let result = A_algorithm();
     //i = row
     //j = line
     //the if is the core. for changing to line enter j ext...
     //alert(start + " "+end);
-    if(result == null)
+    if(result == null){
+        printSquares();
         return;
+    }
     result = result.node;
     squars[end.x][end.y] = "red";
     while(result.node)
