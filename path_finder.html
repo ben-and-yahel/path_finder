@@ -175,6 +175,7 @@ using linked list
 */
 function A_algorithm()
 {
+    let firsts = [];
     let startNode = new Node(start,null);
     let NodesArray = ExpandArray(startNode);//initiate the nodews array with the start point
     let bestTrace = null;
@@ -189,14 +190,22 @@ function A_algorithm()
         }
         NodesArray = sortByFcost(NodesArray);//searching for the closest
         tempNodeArray = ExpandArray(NodesArray[0]);
-        console.log(NodesArray.splice(0,1));
+        firsts.push(NodesArray.splice(0,1));
         NodesArray.push.apply(NodesArray,tempNodeArray);//adding next gen
+        var i = 0;
         NodesArray.forEach(n => {//making progress, sign it and check if finish
-            squars[n.point.x][n.point.y] = "#123456";
+            
             if(n.point.x == end.x && n.point.y == end.y){
                 bestTrace = n; 
                 exit = false;
             }
+            firsts.forEach(first => {//checking for false run - removing create a minor bug
+                if(first[0].point.x == n.point.x && first[0].point.y == n.point.y){
+                    NodesArray.splice(i,1);
+                }
+            });
+            squars[n.point.x][n.point.y] = "#123456";//mark the way:)
+            i++;
         });
         printSquares();
     }
