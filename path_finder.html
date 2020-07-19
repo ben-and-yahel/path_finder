@@ -180,6 +180,13 @@ function A_algorithm()
     let NodesArray = ExpandArray(startNode);//initiate the nodews array with the start point
     let bestTrace = null;
     var exit = true;
+    NodesArray.forEach(n => {//checking if the start is a neighbore of the end
+            
+            if(n.point.x == end.x && n.point.y == end.y){
+                bestTrace = n; 
+                exit = false;
+            }
+    });
     while(exit)
     {
         if(NodesArray.length == 0){
