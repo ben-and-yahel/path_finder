@@ -239,6 +239,8 @@ function draw_path(e) {
     }
     result = result.node;
     squars[end.x][end.y] = "red";
+    squars[start.x][start.y] = "blue";
+
     while(result.node)
     {
         squars[result.point.x][result.point.y] = "#00ffcc";  
