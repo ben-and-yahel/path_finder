@@ -50,23 +50,7 @@ function algorithem(number) {
 
 }
 
-function draw_path(e) {
-    let result = A_algorithm();
-    if(result == null){
-        printSquares();
-        return;
-    }
-    result = result.node;
-    squars[end.x][end.y] = "red";
-    squars[start.x][start.y] = "blue";
 
-    while(result.node)
-    {
-        squars[result.point.x][result.point.y] = "#00ffcc";  
-        result = result.node;
-    }
-    printSquares();
-}
 function onClick(e) {
     pageShift = 65;
     clicX = e.pageX;
@@ -293,3 +277,20 @@ function sleep(milliseconds) {
       }
       return bestTrace;
   }
+  function draw_path(e) {
+    let result = A_algorithm();
+    if(result == null){
+        printSquares();
+        return;
+    }
+    result = result.node;
+    squars[end.x][end.y] = "red";
+    squars[start.x][start.y] = "blue";
+
+    while(result.node)
+    {
+        squars[result.point.x][result.point.y] = "#00ffcc";  
+        result = result.node;
+    }
+    printSquares();
+}
