@@ -39,9 +39,9 @@ class Point{
         this.x = x;
         this.y = y;
         this.color = color;
-        this.H_cost = 0;
-        this.G_cost = 0;
-        this.F_cost = 0;
+        this.H_cost = 0; //distance between the end point and another point
+        this.G_cost = 0;//distance between the start point and another point
+        this.F_cost = 0;// the sum of g cost and h cost
     }
     upgrade() {
         this.H_cost = calculateHcost(this);
@@ -65,6 +65,8 @@ seperate = 10;
 squars = []; // square => [color]
 startExist = false;
 start = end = Object;
+
+
 function sleep(milliseconds) {
   const date = Date.now();
   let currentDate = null;
@@ -178,10 +180,10 @@ function A_algorithm()
     let firsts = [];
     let startNode = new Node(start,null);
     let NodesArray = ExpandArray(startNode);//initiate the nodews array with the start point
-    let bestTrace = null;
+    // startNode => start || NodesArray => [up, down, left, right]
+    let bestTrace = null; 
     var exit = true;
     NodesArray.forEach(n => {//checking if the start is a neighbore of the end
-            
             if(n.point.x == end.x && n.point.y == end.y){
                 bestTrace = n; 
                 exit = false;
@@ -193,15 +195,15 @@ function A_algorithm()
             exit = false;
             squars[end.x][end.y] = "yellow"
             squars[start.x][start.y] = "yellow"
+            alert("no path avalible!");
             continue;
         }
-        NodesArray = sortByFcost(NodesArray);//searching for the closest
+        NodesArray = sortByFcost(NodesArray);//searching for the closest to the end
         tempNodeArray = ExpandArray(NodesArray[0]);
-        firsts.push(NodesArray.splice(0,1));
+        firsts.push(NodesArray.splice(0,1)); // array: [1,2,3,4] splice(0,1) : [1]
         NodesArray.push.apply(NodesArray,tempNodeArray);//adding next gen
         var i = 0;
         NodesArray.forEach(n => {//making progress, sign it and check if finish
-            
             if(n.point.x == end.x && n.point.y == end.y){
                 bestTrace = n; 
                 exit = false;
@@ -219,20 +221,7 @@ function A_algorithm()
     return bestTrace;
 }
 function draw_path(e) {
-    //e.keyCode
-    
-    // switch (algorithem)
-    // {
-    //     case 1:
-    //         function
-    //         break;
-    // }
-
     let result = A_algorithm();
-    //i = row
-    //j = line
-    //the if is the core. for changing to line enter j ext...
-    //alert(start + " "+end);
     if(result == null){
         printSquares();
         return;
@@ -246,17 +235,6 @@ function draw_path(e) {
         squars[result.point.x][result.point.y] = "#00ffcc";  
         result = result.node;
     }
-    /*for (let i = start.x+1; i < end.x; i++) {
-        squars[i][start.y] = "#00ffcc";      
-    }*/
-    // for (let i = 0; i < squars.length; i++) {
-    //     for (let j = 0; j < squars[i].length; j++) {
-    //         if (i == 2) {
-    //             squars[i][j][2] = "#00ffcc";
-    //         }
-    //     }
-    // }
-
     printSquares();
 }
 function onClick(e) {
