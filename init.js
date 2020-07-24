@@ -187,8 +187,10 @@ function sleep(milliseconds) {
           NodesArray.push(new Node(new Point(x,y-1,"green"),ExpendedNode));
       if(y+1 < height && squars[x][y+1] != "black" && haventBeenThere(x,y+1,ExpendedNode))
           NodesArray.push(new Node(new Point(x,y+1,"green"),ExpendedNode));
-      for (let index = 0; index < NodesArray.length; index++) 
-          NodesArray[index].upgrade();
+      for (let index = 0; index < NodesArray.length; index++) {
+        NodesArray[index].upgrade();
+        squars[NodesArray[index].point.x][NodesArray[index].point.y] = "#123456";//mark the way:)
+      }
           
       return NodesArray;
   }
@@ -234,6 +236,7 @@ function sleep(milliseconds) {
   */
   function A_algorithm()
   {
+    var time1 = new Date();
       let firsts = [];
       let startNode = new Node(start,null);
       let NodesArray = ExpandArray(startNode);//initiate the nodews array with the start point
@@ -270,11 +273,13 @@ function sleep(milliseconds) {
                       NodesArray.splice(i,1);
                   }
               });
-              squars[n.point.x][n.point.y] = "#123456";//mark the way:)
               i++;
           });
           printSquares();
+          console.log(NodesArray)
       }
+      let time2 = new Date();
+      alert(time2.getMilliseconds()-time1.getMilliseconds());
       return bestTrace;
   }
   function draw_path(e) {
