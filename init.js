@@ -292,14 +292,14 @@ function sleep(milliseconds) {
     squars[end.x][end.y] = "red";
     squars[start.x][start.y] = "blue";
     path_result = result;
-    setInterval(draw_animation, 1000/15);
-    // path_result = result;
-    // while(result.node)
-    // {
-    //     squars[result.point.x][result.point.y] = "#00ffcc";  
-    //     result = result.node;
-    // }
-    //printSquares();
+    //setInterval(draw_animation, 1000/15);
+    path_result = result;
+    while(result.node)
+    {
+        squars[result.point.x][result.point.y] = "#00ffcc";  
+        result = result.node;
+    }
+    printSquares();
 }
 
 function draw_animation() {
