@@ -279,7 +279,7 @@ function sleep(milliseconds) {
           console.log(NodesArray)
       }
       let time2 = new Date();
-      alert(time2.getMilliseconds()-time1.getMilliseconds());
+      alert("time took: "+(time2.getMilliseconds()-time1.getMilliseconds())+" mill sec");
       return bestTrace;
   }
   function draw_path(e) {
