@@ -291,11 +291,23 @@ function sleep(milliseconds) {
     result = result.node;
     squars[end.x][end.y] = "red";
     squars[start.x][start.y] = "blue";
+    path_result = result;
+    setInterval(draw_animation, 1000/15);
+    // path_result = result;
+    // while(result.node)
+    // {
+    //     squars[result.point.x][result.point.y] = "#00ffcc";  
+    //     result = result.node;
+    // }
+    //printSquares();
+}
 
-    while(result.node)
-    {
-        squars[result.point.x][result.point.y] = "#00ffcc";  
-        result = result.node;
+function draw_animation() {
+    if (path_result.node == null) {
+        return false;
     }
+    
+    squars[path_result.point.x][path_result.point.y] = "#00ffcc";  
+    path_result = path_result.node;
     printSquares();
 }

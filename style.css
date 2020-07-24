@@ -3,7 +3,17 @@ html, body {
     height: 100%;
     margin: 0;
             } 
-                  
+#reload{
+  position: absolute;
+    display: inline-block;
+    left: 520px;
+    top: 0px;
+    background-color: #7755a3;
+    color: white;
+    padding: 14px;
+    font-size: 13px;
+    border: none;
+}  
 #welcome{
     user-select: none;
     color: white; 
