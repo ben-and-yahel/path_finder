@@ -41,10 +41,12 @@ seperate = 1;
 squars = []; // square => [color]
 startExist = false;
 start = end = Object;
-animate = false;
+isAnimate = false;
 
 function animation() {
-    animate = !animate;
+    let txt = "Animation &#973";
+    isAnimate = !isAnimate;
+    document.getElementById("animation").innerHTML = !isAnimate? txt+"4;":  txt+"3;";
 }
 //algorithem = 
 function algorithem(number) {
@@ -127,13 +129,16 @@ function printSquares() {
     }
 }
 
-function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
+function draw_animation() {
+    if (path_result.node == null) {
+        return false;
+    }
+    
+    squars[path_result.point.x][path_result.point.y] = "#00ffcc";  
+    path_result = path_result.node;
+    printSquares();
+}
+
   /*
   calculate the distance between 2 points
   */
@@ -295,22 +300,17 @@ function sleep(milliseconds) {
     squars[end.x][end.y] = "red";
     squars[start.x][start.y] = "blue";
     path_result = result;
-    setInterval(draw_animation, 1000/15);
-    // path_result = result;
-    // while(result.node)
-    // {
-    //     squars[result.point.x][result.point.y] = "#00ffcc";  
-    //     result = result.node;
-    // }
-    printSquares();
-}
-
-function draw_animation() {
-    if (path_result.node == null) {
-        return false;
+    if (isAnimate) {
+        setInterval(draw_animation, 1000/15);
+    }
+    else{
+        path_result = result;
+        while(result.node)
+        {
+            squars[result.point.x][result.point.y] = "#00ffcc";  
+            result = result.node;
+        }
+        printSquares();
     }
     
-    squars[path_result.point.x][path_result.point.y] = "#00ffcc";  
-    path_result = path_result.node;
-    printSquares();
 }
