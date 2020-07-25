@@ -5,15 +5,27 @@ html, body {
             } 
 #reload{
   position: absolute;
-    display: inline-block;
-    left: 520px;
-    top: 0px;
-    background-color: #7755a3;
-    color: white;
-    padding: 14px;
-    font-size: 13px;
-    border: none;
+  display: inline-block;
+  left: 520px;
+  top: 0px;
+  background-color: #7755a3;
+  color: white;
+  padding: 14px;
+  font-size: 13px;
+  border: none;
 }  
+#animation{
+  user-select: none;
+  position: absolute;
+  display: inline-block;
+  left: 705px;
+  top: 0px;
+  background-color: #7755a3;
+  color: white;
+  padding: 12px;
+  font-size: 13px;
+  border: none;
+}
 #welcome{
     user-select: none;
     color: white; 
@@ -50,7 +62,10 @@ html, body {
     text-decoration: none;
     display: block;
   }
-  
+  #animation:hover{background-color: #392e47;}
+
+  #reload:hover{background-color: #392e47;}
+
   .dropdown-content a:hover {background-color: #ddd;}
   
   .dropdown:hover .dropdown-content {display: block;}

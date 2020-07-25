@@ -41,8 +41,11 @@ seperate = 1;
 squars = []; // square => [color]
 startExist = false;
 start = end = Object;
+animate = false;
 
-
+function animation() {
+    animate = !animate;
+}
 //algorithem = 
 function algorithem(number) {
 
@@ -279,7 +282,7 @@ function sleep(milliseconds) {
           console.log(NodesArray)
       }
       let time2 = new Date();
-      alert("time took: "+(time2.getMilliseconds()-time1.getMilliseconds())+" mill sec");
+      //alert("time took: "+(time2.getMilliseconds()-time1.getMilliseconds())+" mill sec");
       return bestTrace;
   }
   function draw_path(e) {
@@ -292,13 +295,13 @@ function sleep(milliseconds) {
     squars[end.x][end.y] = "red";
     squars[start.x][start.y] = "blue";
     path_result = result;
-    //setInterval(draw_animation, 1000/15);
-    path_result = result;
-    while(result.node)
-    {
-        squars[result.point.x][result.point.y] = "#00ffcc";  
-        result = result.node;
-    }
+    setInterval(draw_animation, 1000/15);
+    // path_result = result;
+    // while(result.node)
+    // {
+    //     squars[result.point.x][result.point.y] = "#00ffcc";  
+    //     result = result.node;
+    // }
     printSquares();
 }
 
