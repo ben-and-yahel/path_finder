@@ -55,6 +55,11 @@ function template() {
             squars[i][j] = color;
         }
     }
+    
+    squars[1][0] = "blue";
+    start = new Point(1, 0);
+    squars[3][4] = "red";
+    end = new Point(3, 4);
     printSquares();
 }
 //algorithem = 
@@ -310,6 +315,7 @@ function draw_animation() {
     squars[start.x][start.y] = "blue";
     path_result = result;
     if (isAnimate) {
+        //TODO: interval bug!!
         setInterval(draw_animation, 1000/15);
     }
     else{
