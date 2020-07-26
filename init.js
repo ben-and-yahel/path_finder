@@ -41,12 +41,21 @@ seperate = 1;
 squars = []; // square => [color]
 startExist = false;
 start = end = Object;
-isAnimate = false;
-
+isAnimate = true;
+//printSquares();
 function animation() {
     let txt = "Animation &#973";
     isAnimate = !isAnimate;
     document.getElementById("animation").innerHTML = !isAnimate? txt+"4;":  txt+"3;";
+}
+function template() {
+    color = "black";
+    for (let i = 0; i < squars.length; i+=2) {
+        for (let j = 0; j < squars[i].length-1; j+=1) {
+            squars[i][j] = color;
+        }
+    }
+    printSquares();
 }
 //algorithem = 
 function algorithem(number) {
@@ -197,7 +206,7 @@ function draw_animation() {
           NodesArray.push(new Node(new Point(x,y+1,"green"),ExpendedNode));
       for (let index = 0; index < NodesArray.length; index++) {
         NodesArray[index].upgrade();
-        squars[NodesArray[index].point.x][NodesArray[index].point.y] = "#123456";//mark the way:)
+        squars[NodesArray[index].point.x][NodesArray[index].point.y] = "yellow";//mark the way:)
       }
           
       return NodesArray;
