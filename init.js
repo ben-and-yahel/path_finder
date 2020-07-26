@@ -7,6 +7,7 @@ function dynamicallyLoadScript(url) {
 window.onload =function() {
     dynamicallyLoadScript("cost_algorithem.js");
     dynamicallyLoadScript("button_functions.js");
+    dynamicallyLoadScript("path_draw.js");
 
     document.addEventListener("keypress",draw_path);
     document.oncontextmenu = onClick;
@@ -133,37 +134,13 @@ function printSquares() {
         }
     }
 }
-function animation_interval() {
-    if (path_result.node == null || stage_index != -1) {
-        return false;
-    }
-    squars[path_result.point.x][path_result.point.y] = "#00ffcc";  
-    path_result = path_result.node;
-    printSquares();
-}
-function draw_animation(result) {
-    algorithem_mind.splice(-1,1)
-    var draw = setInterval(function () {
-        algorithem_mind[stage_index].forEach(stage => {
-            stage.forEach(point =>{
-                squars[point.x][point.y] = "yellow";
-            })
-        });
-        if (stage_index >= algorithem_mind.length-1) {
-            stage_index = -1;
-            setInterval(animation_interval, 1000/15);
-            clearInterval(draw);
-            return;
-        }
-        stage_index +=1;
-        printSquares();
-    }, 1000/12);
-}
+
 function draw_path() {
     stage_index = 0;
     clearBoard();
     algorithem_mind = [];
     let result = [];
+
     switch (algorithem_number) {
         case 1:
             result = A_algorithm();
@@ -180,6 +157,7 @@ function draw_path() {
     squars[end.x][end.y] = "red";
     squars[start.x][start.y] = "blue";
     path_result = result;
+    
     if (isAnimate) {
         draw_animation(result);
     }
