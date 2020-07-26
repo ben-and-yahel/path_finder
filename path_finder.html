@@ -1,13 +1,7 @@
 
 <html lang="en">
 <head>
-    <style>
-        html, body {
-        width:  100%;
-        height: 100%;
-        margin: 0;
-                }       
-    </style>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Path finder</title>
@@ -15,137 +9,21 @@
 <body>
     
 <!-- TODO: make an down list for algorithems -->
-<div>
-<h1 style="user-select: none;color: white; background-color:purple;font-family: Comic Sans MS;">
-    Welocome to the Path Finder!</h1>
-</div>
+
+<h1 id="welcome">Welocome to the Path Finder!</h1>
+<button id="reload" onclick="window.location.reload();">Reload &#8634;</button>
+<button id="animation" onclick="animation();">Animation &#9733;</button>
+<button id="template" onclick="template();">Template &#9739;</button>
+    <div class="dropdown">
+        <button class="dropbtn">Algorithems &#8609;</button>
+        <div class="dropdown-content">
+          <a onclick="algorithem(1);"href="#">cost</a>
+          <a onclick="algorithem(2);"href="#">random</a>
+          <a onclick="algorithem(3);" href="#">binary search</a>
+        </div>
+      </div>
+
     <canvas id="gc" onclick="onClick(event);"></canvas>
-    
-    <script>
-    window.onload =function() {
-    document.addEventListener("keypress",draw_path);
-    //document.addEventListener("click", onClick);
-    document.oncontextmenu = onClick;
-    canv=document.getElementById("gc");
-    ctx = canv.getContext("2d");
-    ctx.canvas.width  = window.innerWidth- 10;
-    ctx.canvas.height = window.innerHeight - strap_height;
-    init();
-    
-}
-class Point{
-    constructor(x, y, color){
-        this.x = x;
-        this.y = y;
-        this.color = color;
-    }
-}
-strap_height = 100;
-height = width = 100;
-seperate = 10;
-squars = []; // square => [color]
-startExist = false;
-start = end = Object;
-
-function draw_path(e) {
-    //e.keyCode
-    
-    // switch (algorithem)
-    // {
-    //     case 1:
-    //         function
-    //         break;
-    // }
-//sjahgdf
-
-    //i = row
-    //j = line
-    //the if is the core. for changing to line enter j ext...
-    //alert(start + " "+end);
-    for (let i = start.x+1; i < end.x; i++) {
-        squars[i][start.y] = "#00ffcc";      
-    }
-    // for (let i = 0; i < squars.length; i++) {
-    //     for (let j = 0; j < squars[i].length; j++) {
-    //         if (i == 2) {
-    //             squars[i][j][2] = "#00ffcc";
-    //         }
-    //     }
-    // }
-
-    printSquares();
-}
-function onClick(e) {
-    pageShift = 65;
-    clicX = e.pageX;
-    clicY = e.pageY-pageShift;
-    //alert(clicX+" "+clicY);
-    isChanged = false;
-    for (let x = 0; x < squars.length; x++) {
-        for (let y = 0; y < squars[x].length; y++) {
-            if (e.button==2 && (squars[x][y] == "blue" || squars[x][y] == "red")) {
-                if (squars[x][y] == "blue" && !startExist) {
-                    squars[x][y] = "grey";
-                }
-                else if (squars[x][y] == "red" && startExist) {
-                    squars[x][y] = "grey";
-                }
-                printSquares();
-            }
-            if (clicX >= x*width && clicX <= x*width+width-seperate 
-                && clicY >= y*height && clicY <= y*height+height-seperate) {
-                    //alert(1);
-                    if (e.button == 2) {
-                        //if there is start so it gone to red for end
-                        if (startExist) {
-                            squars[x][y] =  "red";
-                            end = new Point(x, y);
-                        }
-                        else
-                        {
-                            squars[x][y] = "blue"; 
-                            start = new Point(x, y);
-                        }
-                        isChanged = true;// if endpoint is set we update it in the end of the func
-                    }
-                    else if (squars[x][y] != "grey") {
-                        squars[x][y] = "grey";
-                    }
-                    else{
-                        squars[x][y] = "black";
-                    }
-                    printSquares();
-            }        
-            //ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
-        }
-    }
-    isChanged ? startExist = !startExist : false;
-    isChanged = false;
-    return false;
-}
-function init() {
-    //makes the squars
-    for (let i = 0; i < ctx.canvas.width/width; i++) {
-        tmp_squars_line = [];
-        for (let j = 0; j < ctx.canvas.height/height; j++) {
-            //ctx.fillRect(i+seperate, j+seperate, width, height);
-            tmp_squars_line.push(["grey"]); // i,j is location | false is for isBarriar     
-        } 
-        squars.push(tmp_squars_line);       
-    }
-    printSquares(squars);
-}
-function printSquares() {
-    x = y = 0;
-    color = "grey";
-    for (let i = 0; i < squars.length; i++) {
-        for (let j = 0; j < squars[i].length; j++) {
-            color = squars[i][j];
-            ctx.fillStyle = color;
-            ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
-        }
-    }
-}
-    </script>
+    <script src="init.js" > </script>
 </body>
 </html>
