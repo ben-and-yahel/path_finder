@@ -22,7 +22,7 @@ class Point{
     upgrade() {
         this.H_cost = calculateHcost(this);
         this.G_cost = calculateGcost(this);
-        this.F_cost = this.H_cost*0.7 + this.G_cost*0.3;
+        this.F_cost = this.H_cost*0.6 + this.G_cost*0.4;
     }
 }
 class Node{
@@ -36,14 +36,14 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 100;
+height = width = 30;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
 startExist = false;
 start = end = undefined;
 isAnimate = true;
-
+algorithem_number = 1;
 //-----------------button functions-------------------
 function animation() {
     let txt = "Animation &#973";
@@ -69,9 +69,9 @@ function template() {
     end = new Point(7, 6);
     printSquares();
 }
-//algorithem = 
 function algorithem(number) {
     alert("you choose algorithem number "+number);
+    algorithem_number = number;
 }
 // ----------------init functions--------------------
 function clearBoard() {
@@ -328,7 +328,15 @@ function draw_path(e) {
     stage_index = 0;
     clearBoard();
     algorithem_mind = [];
-    let result = A_algorithm();
+    let result = [];
+    switch (algorithem_number) {
+        case 1:
+            result = A_algorithm();
+            break;
+        default:
+            break;
+    }
+    
     if(result == null){
         printSquares();
         return;
@@ -353,7 +361,7 @@ function draw_path(e) {
             }
             stage_index +=1;
             printSquares();
-        }, 1000/10);
+        }, 1000/12);
         //TODO: interval bug!!
         //setInterval(draw_animation, 1000/15);
     }
