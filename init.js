@@ -43,7 +43,8 @@ squars = []; // square => [color]
 startExist = false;
 start = end = undefined;
 isAnimate = true;
-
+algorithem_number = 1;
+let stage_index = 0;
 //-----------------button functions-------------------
 function animation() {
     let txt = "Animation &#973";
@@ -71,6 +72,7 @@ function template() {
 }
 //algorithem = 
 function algorithem(number) {
+    algorithem_number = number;
     alert("you choose algorithem number "+number);
 }
 // ----------------init functions--------------------
@@ -153,7 +155,7 @@ function printSquares() {
         }
     }
 }
-let stage_index = 0;
+
 
 function draw_animation() {
     if (path_result.node == null || stage_index != -1) {
@@ -316,14 +318,21 @@ function draw_animation() {
           console.log(NodesArray)
       }
       let time2 = new Date();
-      //alert("time took: "+(time2.getMilliseconds()-time1.getMilliseconds())+" mill sec");
+      alert("time took: "+((time2.getMilliseconds()-time1.getMilliseconds()))+" mill sec");
       return bestTrace;
   }
 function draw_path(e) {
     stage_index = 0;
     clearBoard();
     algorithem_mind = [];
-    let result = A_algorithm();
+    let result = [];
+    switch (algorithem_number) {
+            case 1:
+                result = A_algorithm();
+            break;
+        default:
+            break;
+    }
     if(result == null){
         printSquares();
         return;
