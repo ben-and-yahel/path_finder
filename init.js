@@ -171,7 +171,7 @@ function draw_animation() {
   */
   function distance(A,B)
   {
-      return Math.floor(Math.sqrt((Math.pow(A.x-B.x,2)+Math.pow(A.y-B.y,2))))*100;
+      return Math.sqrt((Math.pow(A.x-B.x,2)+Math.pow(A.y-B.y,2)))*100;
   }
   /*
   calculate the distance between the start point and another point
