@@ -22,7 +22,7 @@ class Point{
     upgrade() {
         this.H_cost = calculateHcost(this);
         this.G_cost = calculateGcost(this);
-        this.F_cost = this.H_cost + this.G_cost;
+        this.F_cost = this.H_cost*0.7 + this.G_cost*0.3;
     }
 }
 class Node{
@@ -36,15 +36,14 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 50;
+height = width = 100;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
 startExist = false;
 start = end = undefined;
 isAnimate = true;
-algorithem_number = 1;
-let stage_index = 0;
+
 //-----------------button functions-------------------
 function animation() {
     let txt = "Animation &#973";
@@ -72,7 +71,6 @@ function template() {
 }
 //algorithem = 
 function algorithem(number) {
-    algorithem_number = number;
     alert("you choose algorithem number "+number);
 }
 // ----------------init functions--------------------
@@ -155,7 +153,7 @@ function printSquares() {
         }
     }
 }
-
+let stage_index = 0;
 
 function draw_animation() {
     if (path_result.node == null || stage_index != -1) {
@@ -173,7 +171,7 @@ function draw_animation() {
   */
   function distance(A,B)
   {
-      return Math.floor(Math.sqrt((Math.pow(A.x-B.x,2)+Math.pow(A.y-B.y,2))))*10;
+      return Math.sqrt((Math.pow(A.x-B.x,2)+Math.pow(A.y-B.y,2)))*100;
   }
   /*
   calculate the distance between the start point and another point
@@ -255,18 +253,18 @@ function draw_animation() {
               }
           }
       }
-      let f = nodeArray[0].point.F_cost;
-      for (let X = 0; X < nodeArray.length; X++) {
-          for (let Y = 0; Y < nodeArray.length - 1; Y++) {
-              if((nodeArray[Y].point.F_cost == f) && (nodeArray[Y].point.H_cost > nodeArray[Y + 1].point.H_cost))
-              {
-                  let temp = nodeArray[Y + 1];
-                  nodeArray[Y + 1] = nodeArray[Y];
-                  nodeArray[Y] = temp;
-              }
+    //   let f = nodeArray[0].point.F_cost;
+    //   for (let X = 0; X < nodeArray.length; X++) {
+    //       for (let Y = 0; Y < nodeArray.length - 1; Y++) {
+    //           if((nodeArray[Y].point.F_cost == f) && (nodeArray[Y].point.H_cost > nodeArray[Y + 1].point.H_cost))
+    //           {
+    //               let temp = nodeArray[Y + 1];
+    //               nodeArray[Y + 1] = nodeArray[Y];
+    //               nodeArray[Y] = temp;
+    //           }
               
-          }
-      }
+    //       }
+    //   }
       return nodeArray;
   }
   /*
@@ -275,7 +273,6 @@ function draw_animation() {
   */
   function A_algorithm()
   {
-    var time1 = new Date();
       let firsts = [];
       let startNode = new Node(start,null);
       let NodesArray = ExpandArray(startNode);//initiate the nodews array with the start point
@@ -283,8 +280,8 @@ function draw_animation() {
       let bestTrace = null; 
       var exit = true;
       NodesArray.forEach(n => {//checking if the start is a neighbore of the end
-              if(n.point.x == end.x && n.point.y == end.y){
-                  bestTrace = n; 
+              if(haveReachTheEnd(n)){
+                  bestTrace = new Node(end,n);
                   exit = false;
               }
       });
@@ -303,8 +300,8 @@ function draw_animation() {
           NodesArray.push.apply(NodesArray,tempNodeArray);//adding next gen
           var i = 0;
           NodesArray.forEach(n => {//making progress, sign it and check if finish
-              if(n.point.x == end.x && n.point.y == end.y){
-                  bestTrace = n; 
+              if(haveReachTheEnd(n)){
+                  bestTrace = new Node(end,n);
                   exit = false;
               }
               firsts.forEach(first => {//checking for false run - removing create a minor bug
@@ -315,24 +312,23 @@ function draw_animation() {
               i++;
           });
           //printSquares();
-          console.log(NodesArray)
       }
-      let time2 = new Date();
-      alert("time took: "+((time2.getMilliseconds()-time1.getMilliseconds()))+" mill sec");
+      //alert("time took: "+(time2.getMilliseconds()-time1.getMilliseconds())+" mill sec");
       return bestTrace;
+  }
+  function haveReachTheEnd(endNode)
+  {
+      let x = endNode.point.x;
+      let y = endNode.point.y;
+      let exitX = (end.x == x + 1 || end.x == x - 1) && end.y == y;
+      let exitY = (end.y == y + 1 || end.y == y - 1) && end.x == x;
+      return exitX || exitY;
   }
 function draw_path(e) {
     stage_index = 0;
     clearBoard();
     algorithem_mind = [];
-    let result = [];
-    switch (algorithem_number) {
-            case 1:
-                result = A_algorithm();
-            break;
-        default:
-            break;
-    }
+    let result = A_algorithm();
     if(result == null){
         printSquares();
         return;
