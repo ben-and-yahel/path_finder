@@ -36,13 +36,15 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 100;
+height = width = 50;
+algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
 startExist = false;
-start = end = Object;
+start = end = undefined;
 isAnimate = true;
-//printSquares();
+
+//-----------------button functions-------------------
 function animation() {
     let txt = "Animation &#973";
     isAnimate = !isAnimate;
@@ -50,31 +52,42 @@ function animation() {
 }
 function template() {
     color = "black";
+    if (start != undefined) {
+        squars[start.x][start.y] = "grey";
+    }
+    if (end != undefined) {
+        squars[end.x][end.y] = "grey";
+    }
     for (let i = 0; i < squars.length; i+=2) {
-        for (let j = 0; j < squars[i].length-1; j+=1) {
+        for (let j = 0; j < squars[i].length-1; j+=2) {
             squars[i][j] = color;
         }
     }
-    
     squars[1][0] = "blue";
     start = new Point(1, 0);
-    squars[3][4] = "red";
-    end = new Point(3, 4);
+    squars[7][6] = "red";
+    end = new Point(7, 6);
     printSquares();
 }
 //algorithem = 
 function algorithem(number) {
-
     alert("you choose algorithem number "+number);
-
 }
-
-
+// ----------------init functions--------------------
+function clearBoard() {
+    for (let i = 0; i < squars.length; i++) {
+        for (let j = 0; j < squars[i].length; j++) {
+            if (squars[i][j] != "black" && squars[i][j] != "grey"  && squars[i][j] != "blue"  && squars[i][j] != "red" ) {
+                squars[i][j] = "grey";
+            }
+            
+        }
+    }
+}
 function onClick(e) {
     pageShift = 65;
     clicX = e.pageX;
     clicY = e.pageY-pageShift;
-    //alert(clicX+" "+clicY);
     isChanged = false;
     for (let x = 0; x < squars.length; x++) {
         for (let y = 0; y < squars[x].length; y++) {
@@ -89,7 +102,6 @@ function onClick(e) {
             }
             if (clicX >= x*width && clicX <= x*width+width-seperate 
                 && clicY >= y*height && clicY <= y*height+height-seperate) {
-                    //alert(1);
                     if (e.button == 2) {
                         //if there is start so it gone to red for end
                         if (startExist) {
@@ -111,7 +123,6 @@ function onClick(e) {
                     }
                     printSquares();
             }        
-            //ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
         }
     }
     isChanged ? startExist = !startExist : false;
@@ -142,9 +153,10 @@ function printSquares() {
         }
     }
 }
+let stage_index = 0;
 
 function draw_animation() {
-    if (path_result.node == null) {
+    if (path_result.node == null || stage_index != -1) {
         return false;
     }
     
@@ -153,6 +165,7 @@ function draw_animation() {
     printSquares();
 }
 
+//---------------algorithem A() functions------------------
   /*
   calculate the distance between 2 points
   */
@@ -209,10 +222,12 @@ function draw_animation() {
           NodesArray.push(new Node(new Point(x,y-1,"green"),ExpendedNode));
       if(y+1 < height && squars[x][y+1] != "black" && haventBeenThere(x,y+1,ExpendedNode))
           NodesArray.push(new Node(new Point(x,y+1,"green"),ExpendedNode));
+    let tmp_stage = [];
       for (let index = 0; index < NodesArray.length; index++) {
         NodesArray[index].upgrade();
-        squars[NodesArray[index].point.x][NodesArray[index].point.y] = "yellow";//mark the way:)
+        tmp_stage.push(NodesArray[index].point);//mark the way:)
       }
+      algorithem_mind.push([tmp_stage]);
           
       return NodesArray;
   }
@@ -297,14 +312,17 @@ function draw_animation() {
               });
               i++;
           });
-          printSquares();
+          //printSquares();
           console.log(NodesArray)
       }
       let time2 = new Date();
       //alert("time took: "+(time2.getMilliseconds()-time1.getMilliseconds())+" mill sec");
       return bestTrace;
   }
-  function draw_path(e) {
+function draw_path(e) {
+    stage_index = 0;
+    clearBoard();
+    algorithem_mind = [];
     let result = A_algorithm();
     if(result == null){
         printSquares();
@@ -315,11 +333,26 @@ function draw_animation() {
     squars[start.x][start.y] = "blue";
     path_result = result;
     if (isAnimate) {
+        algorithem_mind.splice(-1,1)
+        var draw = setInterval(function () {
+            algorithem_mind[stage_index].forEach(stage => {
+                stage.forEach(point =>{
+                    squars[point.x][point.y] = "yellow";
+                })
+            });
+            if (stage_index >= algorithem_mind.length-1) {
+                stage_index = -1;
+                setInterval(draw_animation, 1000/15);
+                clearInterval(draw);
+                return;
+            }
+            stage_index +=1;
+            printSquares();
+        }, 1000/10);
         //TODO: interval bug!!
-        setInterval(draw_animation, 1000/15);
+        //setInterval(draw_animation, 1000/15);
     }
     else{
-        path_result = result;
         while(result.node)
         {
             squars[result.point.x][result.point.y] = "#00ffcc";  
