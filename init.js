@@ -54,7 +54,7 @@ start = end = undefined;
 isAnimate = true;
 algorithem_number = 1;
 stage_index = 0;
-
+full_line_mark = false;
 // ----------------init functions--------------------
 function clearBoard() {
     for (let i = 0; i < squars.length; i++) {
@@ -70,6 +70,7 @@ function onClick(e) {
     clicX = e.pageX;
     clicY = e.pageY-pageShift;
     isChanged = false;
+
     for (let x = 0; x < squars.length; x++) {
         for (let y = 0; y < squars[x].length; y++) {
             if (e.button==2 && (squars[x][y] == "blue" || squars[x][y] == "red")) {
@@ -80,6 +81,11 @@ function onClick(e) {
                     squars[x][y] = "grey";
                 }
                 printSquares();
+            }
+            else if(full_line_mark && clicX >= x*width && clicX <= x*width+width-seperate)
+            {
+                squars[x][y] = "black";
+                continue;
             }
             if (clicX >= x*width && clicX <= x*width+width-seperate 
                 && clicY >= y*height && clicY <= y*height+height-seperate) {
@@ -101,11 +107,13 @@ function onClick(e) {
                     }
                     else{
                         squars[x][y] = "black";
+                        
                     }
-                    printSquares();
+                    
             }        
         }
     }
+    printSquares();
     isChanged ? startExist = !startExist : false;
     isChanged = false;
     return false;
@@ -135,7 +143,7 @@ function printSquares() {
     }
 }
 
-function draw_path() {
+function draw_path(e) {
     stage_index = 0;
     clearBoard();
     algorithem_mind = [];
