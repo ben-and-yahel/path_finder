@@ -50,7 +50,7 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 30;
+height = width = 20;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
@@ -150,7 +150,7 @@ function onClick(e) {
             }        
         }
     }
-    //printSquares();
+    printSquares();
     isChanged ? startExist = !startExist : false;
     isChanged = false;
     return false;
