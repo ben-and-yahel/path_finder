@@ -87,18 +87,7 @@
              }
          }
      }
-   //   let f = nodeArray[0].point.F_cost;
-   //   for (let X = 0; X < nodeArray.length; X++) {
-   //       for (let Y = 0; Y < nodeArray.length - 1; Y++) {
-   //           if((nodeArray[Y].point.F_cost == f) && (nodeArray[Y].point.H_cost > nodeArray[Y + 1].point.H_cost))
-   //           {
-   //               let temp = nodeArray[Y + 1];
-   //               nodeArray[Y + 1] = nodeArray[Y];
-   //               nodeArray[Y] = temp;
-   //           }
-             
-   //       }
-   //   }
+
      return nodeArray;
  }
  function removeRepeaters(nodeArrayToCheck)
