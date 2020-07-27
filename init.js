@@ -60,6 +60,7 @@ isAnimate = true;
 algorithem_number = 1;
 stage_index = 0;
 full_line_mark = false;
+index = 0;
 // ----------------init functions--------------------
 function clearBoard() {
     for (let i = 0; i < squars.length; i++) {
@@ -71,6 +72,7 @@ function clearBoard() {
     }
 }
 function onClick(e) {
+    //index = 0;
     pageShift = 65;
     clicX = e.pageX;
     clicY = e.pageY-pageShift;
@@ -88,7 +90,8 @@ function onClick(e) {
             }
             else if(full_line_mark && clicX >= x*width && clicX <= x*width+width-seperate)
             {
-                squars[x][y] = "black";
+                //squars[x][y] = "black";
+                update_square(new Point(x, y, "black"))
                 continue;
             }
             if (clicX >= x*width && clicX <= x*width+width-seperate 
@@ -96,23 +99,21 @@ function onClick(e) {
                     if (e.button == 2) {
                         //if there is start so it gone to red for end
                         if (startExist) {
-                            squars[x][y] =  "red";
-                            end = new Point(x, y);
+                            end = new Point(x, y, "red");
+                            update_square(end);
                         }
                         else
                         {
-                            squars[x][y] = "blue"; 
-                            start = new Point(x, y);
+                            start = new Point(x, y, "blue");
+                            update_square(start);
                         }
                         isChanged = true;// if endpoint is set we update it in the end of the func
                     }
                     else if (squars[x][y] != "grey") {
-                        
-                        squars[x][y] = "grey";
+                        update_square(new Point(x, y, "grey"))
                     }
                     else{
-                        
-                        squars[x][y] = "black";
+                        update_square(new Point(x, y, "black"))
                     }
                     
             }        
@@ -123,7 +124,7 @@ function onClick(e) {
     isChanged = false;
     return false;
 }
-index = 0;
+
 function draw_square(point) {
     // ctx.fillStyle = "grey";
     // ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
