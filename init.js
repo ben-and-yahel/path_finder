@@ -178,6 +178,11 @@ function printSquares() {
 }
 
 function draw_path() {
+
+    if (end == undefined) {
+        alert("please enter start and end point(right mouse click)!");
+        return;
+    }
     stage_index = 0;
     clearBoard();
     algorithem_mind = [];

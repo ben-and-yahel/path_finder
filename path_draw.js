@@ -3,6 +3,7 @@ function animation_interval() {
     if (path_result.node == null || stage_index != -1) {
         return false;
     }
+    clearInterval(animate_square);
     squars[path_result.point.x][path_result.point.y] = "#00ff99";  
     path_result = path_result.node;
     printSquares();
@@ -13,14 +14,19 @@ function draw_animation() {
     var draw = setInterval(function () {
         algorithem_mind[stage_index].forEach(stage => {
             stage.forEach(point =>{
-                squars[point.x][point.y] = "#0000ff";
+                squars[point.x][point.y] = "#003366";
             })
             tmp_stage.forEach(point =>{
                 squars[point.x][point.y] = "#00ccff";
             })
             tmp_stage = stage;
         });
+
+        //the end of the interval
         if (stage_index >= algorithem_mind.length-1) {
+            tmp_stage.forEach(point =>{
+                squars[point.x][point.y] = "#00ccff";
+            });
             stage_index = -1;
             setInterval(animation_interval, 1000/15);
             clearInterval(draw);
@@ -28,5 +34,6 @@ function draw_animation() {
         }
         stage_index +=1;
         printSquares();
-    }, 1000/12);
+    }, 1000/10);
+
 }
