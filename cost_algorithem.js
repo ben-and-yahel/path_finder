@@ -78,7 +78,7 @@
                  nodeArray[Y + 1] = nodeArray[Y];
                  nodeArray[Y] = temp;
              }
-             else if((nodeArray[Y].point.F_cost == nodeArray[Y + 1].point.F_cost) && (nodeArray[Y].point.H_cost < nodeArray[Y + 1].point.H_cost))
+             else if((nodeArray[Y].point.F_cost == nodeArray[Y + 1].point.F_cost) && ( nodeArray[Y].point.H_cost > nodeArray[Y + 1].point.H_cost && nodeArray[Y].depth > nodeArray[Y + 1].depth ))
              {
                  let temp = nodeArray[Y + 1];
                  nodeArray[Y + 1] = nodeArray[Y];

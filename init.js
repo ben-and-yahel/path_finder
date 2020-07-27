@@ -38,6 +38,11 @@ class Node{
     constructor(p,n){
         this.point = p;
         this.node = n;
+        this.depth = 0;
+        if(n != null)
+        {
+            this.depth = n.depth + 1;
+        }
     }
     upgrade() {
         this.point.upgrade();
