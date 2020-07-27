@@ -79,7 +79,7 @@
                  nodeArray[Y + 1] = nodeArray[Y];
                  nodeArray[Y] = temp;
              }
-             else if((nodeArray[Y].point.F_cost == nodeArray[Y + 1].point.F_cost) && ( nodeArray[Y].point.H_cost > nodeArray[Y + 1].point.H_cost && nodeArray[Y].depth > nodeArray[Y + 1].depth ))
+             else if((nodeArray[Y].point.F_cost == nodeArray[Y + 1].point.F_cost) && nodeArray[Y].point.H_cost > nodeArray[Y + 1].point.H_cost)
              {
                  let temp = nodeArray[Y + 1];
                  nodeArray[Y + 1] = nodeArray[Y];
@@ -100,6 +100,35 @@
    //       }
    //   }
      return nodeArray;
+ }
+ function removeRepeaters(nodeArrayToCheck)
+ {
+     removed = [];
+     for (let index = 0; index < nodeArrayToCheck.length; index++) {
+        for (let index2 = 0; index2 < nodeArrayToCheck.length; index2++) {
+            if(index == index2){
+                continue;
+            }
+            let temp = nodeArrayToCheck[index2];
+            let d = nodeArrayToCheck[index2].depth;
+            while(temp){
+                let x2 = temp.point.x;
+                let y2 = temp.point.y;
+                if(nodeArrayToCheck[index].point.x == x2 && nodeArrayToCheck[index].point.y == y2 && nodeArrayToCheck[index].depth < d)
+                {
+                    nodeArrayToCheck.splice(index2,1);
+                    removed.push(nodeArrayToCheck[index].point);
+                    index = 0;
+                    index2 = -1;
+                    temp = null;
+                }
+                else{
+                    temp = temp.node;
+                }
+            }
+        }
+     }
+     return removed;
  }
  /*
  main function of the algorithm
@@ -133,13 +162,15 @@
          firsts.push(NodesArray.splice(0,1)); // array: [1,2,3,4] splice(0,1) : [1]
          NodesArray.push.apply(NodesArray,tempNodeArray);//adding next gen
          var i = 0;
+        // let removed = removeRepeaters(NodesArray);
+
          NodesArray.forEach(n => {//making progress, sign it and check if finish
              if(haveReachTheEnd(n)){
                  bestTrace = new Node(end,n);
                  exit = false;
              }
              firsts.forEach(first => {//checking for false run - removing create a minor bug
-                 if(first[0].point.x == n.point.x && first[0].point.y == n.point.y){
+                if(/*!(first[0].point in removed) &&*/ first[0].point.x == n.point.x && first[0].point.y == n.point.y){
                      NodesArray.splice(i,1);
                  }
              });

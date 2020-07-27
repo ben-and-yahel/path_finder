@@ -32,7 +32,7 @@ class Point{
     }
     upgrade() {
         this.H_cost = calculateHcost(this);
-        this.G_cost = calculateGcost(this);
+        this.G_cost = this.depth*100;
         this.F_cost = this.H_cost*0.6 + this.G_cost*0.4;
     }
 }
@@ -52,7 +52,7 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 30;
+height = width = 70;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
