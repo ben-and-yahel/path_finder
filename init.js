@@ -9,6 +9,7 @@ window.onload =function() {
     dynamicallyLoadScript("button_functions.js");
     dynamicallyLoadScript("path_draw.js");
     dynamicallyLoadScript("star_algorithm.js");
+    //var page_name =  window.location.pathname.split("/").pop();
 
     document.addEventListener("keypress",draw_path);
     document.oncontextmenu = onClick;
@@ -64,6 +65,7 @@ full_line_mark = false;
 square_animation_index = 0;
 animate_square = undefined;
 animation_rate = 70;
+debug_mode = false;
 // ----------------init functions--------------------
 
 function init() {
@@ -146,12 +148,14 @@ function onClick(e) {
                     //     break;
                     // }
                     else if (squars[x][y] != "grey") {
-                        update_square(new Point(x, y, "grey"))
+                        update_square(new Point(x, y, "grey"));
                     }
                     else{
-                        h = document.getElementById("welcome");
-                        h.innerHTML  = "y:"+y+"x:"+x;
-                        update_square(new Point(x, y, "black"))
+                        if (debug_mode) {
+                            h = document.getElementById("welcome");
+                            h.innerHTML  = "y:"+y+" x:"+x;
+                        }
+                        update_square(new Point(x, y, "black"));
                     }
                     
             }        
