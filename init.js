@@ -9,7 +9,6 @@ window.onload =function() {
     dynamicallyLoadScript("button_functions.js");
     dynamicallyLoadScript("path_draw.js");
     dynamicallyLoadScript("star_algorithm.js");
-    //var page_name =  window.location.pathname.split("/").pop();
 
     document.addEventListener("keypress",draw_path);
     document.oncontextmenu = onClick;
