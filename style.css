@@ -38,6 +38,18 @@ html, body {
   font-size: 12px;
   border: none;
 }
+#row{
+  user-select: none;
+  position: absolute;
+  display: inline-block;
+  left: 888px;
+  top: 0px;
+  background-color: #7755a3;
+  color: white;
+  padding: 14px;
+  font-size: 12px;
+  border: none;
+}
 #welcome{
     user-select: none;
     color: white; 
@@ -78,7 +90,7 @@ html, body {
   #template:hover{background-color: #392e47;}
 
   #reload:hover{background-color: #392e47;}
-
+  #row:hover{background-color: #392e47;}
   .dropdown-content a:hover {background-color: #ddd;}
   
   .dropdown:hover .dropdown-content {display: block;}

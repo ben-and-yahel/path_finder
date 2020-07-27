@@ -27,3 +27,6 @@ function algorithem(number) {
     alert("you choose algorithem number "+number);
     algorithem_number = number;
 }
+function row() {
+    full_line_mark = !full_line_mark;
+} 

@@ -59,7 +59,7 @@ start = end = undefined;
 isAnimate = true;
 algorithem_number = 1;
 stage_index = 0;
-
+full_line_mark = false;
 // ----------------init functions--------------------
 function clearBoard() {
     for (let i = 0; i < squars.length; i++) {
@@ -86,14 +86,20 @@ function onClick(e) {
                 }
                 printSquares();
             }
+            else if(full_line_mark && clicX >= x*width && clicX <= x*width+width-seperate)
+            {
+                squars[x][y] = "black";
+                continue;
+            }
             if (clicX >= x*width && clicX <= x*width+width-seperate 
                 && clicY >= y*height && clicY <= y*height+height-seperate) {
                     if (e.button == 2) {
                         //if there is start so it gone to red for end
                         if (startExist) {
-                            squars[x][y] =  "red";
+                            squars[x][y] =  "reניגשתd";
                             end = new Point(x, y);
                         }
+                        
                         else
                         {
                             squars[x][y] = "blue"; 
@@ -107,10 +113,11 @@ function onClick(e) {
                     else{
                         squars[x][y] = "black";
                     }
-                    printSquares();
+                    
             }        
         }
     }
+    printSquares();
     isChanged ? startExist = !startExist : false;
     isChanged = false;
     return false;
