@@ -65,6 +65,7 @@ full_line_mark = false;
 square_animation_index = 0;
 animate_square = undefined;
 animation_rate = 70;
+var cornerRadius = 15;
 // ----------------init functions--------------------
 
 function init() {
@@ -84,14 +85,18 @@ function init() {
 function draw_square(point) {
     squars[point.x][point.y] = point.color;
     ctx.fillStyle = point.color;
+    ctx.strokeStyle = point.color;
     ctx.fillRect((point.x*width+width/4)-square_animation_index/2,
                 (point.y*height+height/4)-square_animation_index/2,
                 (width-seperate)/2+square_animation_index,
                 (height-seperate)/2+square_animation_index);
     square_animation_index +=1;
-    if (square_animation_index > (height/2)-seperate) {
+    if (square_animation_index > (height/2)-seperate-6) {
         square_animation_index = 0;
-        //ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
+
+        // ctx.strokeRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
+        // ctx.fillRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
+        ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
         clearInterval(animate_square);
         return;
     }
@@ -175,6 +180,16 @@ function printSquares() {
         for (let j = 0; j < squars[i].length; j++) {
             color = squars[i][j];
             ctx.fillStyle = color;
+            // ctx.lineJoin = "round";
+            // ctx.lineWidth = 10;
+            // if (squars[i][j] == "#003366" ||squars[i][j] == "#00ccff" ||squars[i][j] == "#0099cc" ||squars[i][j] == "#00ff99" ) {
+            //     //ctx.fillStyle = "white";
+            //     //ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
+            //     ctx.fillStyle = color;
+            //     ctx.beginPath();
+            //     ctx.arc(((i*width)-width/2) +width*2 + seperate, ((j*height)-height/2) + height*2+seperate, width/4, 0, 2 * Math.PI);
+            //     ctx.fill();
+            // }
             ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
         }
     }
