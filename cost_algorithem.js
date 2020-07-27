@@ -157,12 +157,13 @@
              alert("no path avalible!");
              continue;
          }
+        //let removed = removeRepeaters(NodesArray);
+
          NodesArray = sortByFcost(NodesArray);//searching for the closest to the end
          tempNodeArray = ExpandArray(NodesArray[0]);
          firsts.push(NodesArray.splice(0,1)); // array: [1,2,3,4] splice(0,1) : [1]
          NodesArray.push.apply(NodesArray,tempNodeArray);//adding next gen
          var i = 0;
-        // let removed = removeRepeaters(NodesArray);
 
          NodesArray.forEach(n => {//making progress, sign it and check if finish
              if(haveReachTheEnd(n)){
@@ -170,7 +171,7 @@
                  exit = false;
              }
              firsts.forEach(first => {//checking for false run - removing create a minor bug
-                if(/*!(first[0].point in removed) &&*/ first[0].point.x == n.point.x && first[0].point.y == n.point.y){
+                 if(/*!(first[0].point in removed) && */first[0].point.x == n.point.x && first[0].point.y == n.point.y){
                      NodesArray.splice(i,1);
                  }
              });

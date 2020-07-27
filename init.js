@@ -30,10 +30,11 @@ class Point{
         this.G_cost = 0;//distance between the start point and another point
         this.F_cost = 0;// the sum of g cost and h cost
     }
-    upgrade() {
+    upgrade(depth) {
         this.H_cost = calculateHcost(this);
-        this.G_cost = this.depth*100;
-        this.F_cost = this.H_cost*0.6 + this.G_cost*0.4;
+        this.G_cost = calculateGcost(this);
+        this.G_cost = depth*100;
+        this.F_cost = this.H_cost*0.7 + this.G_cost*0.3;
     }
 }
 class Node{
@@ -47,7 +48,7 @@ class Node{
         }
     }
     upgrade() {
-        this.point.upgrade();
+        this.point.upgrade(this.depth);
     }
 
 }
