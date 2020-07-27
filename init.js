@@ -50,7 +50,7 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 80;
+height = width = 30;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
