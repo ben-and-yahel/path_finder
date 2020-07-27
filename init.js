@@ -149,6 +149,8 @@ function onClick(e) {
                         update_square(new Point(x, y, "grey"))
                     }
                     else{
+                        h = document.getElementById("welcome");
+                        h.innerHTML  = "y:"+y+"x:"+x;
                         update_square(new Point(x, y, "black"))
                     }
                     
