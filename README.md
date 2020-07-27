@@ -4,7 +4,7 @@ Hi! well you probably saw a thouthen of thos.
 And for a very good reson!its such a fun project!
 # what is it?
 
-well for the foks who dosen't know what pathfinding is, it basicly a bunch of squares with barrires between them and an algorithem how tryes to navigate between them from point A to B. 
+well for the folks who dosen't know what pathfinding is, it basicly a bunch of squares with barrires between them and an algorithem how tryes to navigate between them from point A to B. 
 ## Prerequisites
 none! (google chrome)
 ## How to use:
