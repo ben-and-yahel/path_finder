@@ -65,7 +65,6 @@ full_line_mark = false;
 square_animation_index = 0;
 animate_square = undefined;
 animation_rate = 70;
-//debug_mode = false;
 // ----------------init functions--------------------
 
 function init() {
@@ -144,17 +143,16 @@ function onClick(e) {
                         }
                         isChanged = true;// if endpoint is set we update it in the end of the func
                     }
-                    // else if (squars[x][y] == "#0000ff" || squars[x][y] == "#00ccff" || squars[x][y] == "#00ff99") {
-                    //     break;
-                    // }
                     else if (squars[x][y] != "grey") {
                         update_square(new Point(x, y, "grey"));
                     }
+                    //the squre is grey and about to be black
                     else{
                         if (debug_mode) {
                             h = document.getElementById("welcome");
                             h.innerHTML  = "y:"+y+" x:"+x;
                         }
+                        //calc_HGF_cost(x,y);
                         update_square(new Point(x, y, "black"));
                     }
                     
