@@ -60,8 +60,38 @@ isAnimate = true;
 algorithem_number = 1;
 stage_index = 0;
 full_line_mark = false;
-index = 0;
+square_animation_index = 0;
+animate_square = undefined;
 // ----------------init functions--------------------
+
+function init() {
+    //makes the squars
+    for (let i = 0; i < ctx.canvas.width/width; i++) {
+        tmp_squars_line = [];
+        for (let j = 0; j < ctx.canvas.height/height; j++) {
+            //ctx.fillRect(i+seperate, j+seperate, width, height);
+            tmp_squars_line.push(["grey"]); // i,j is location | false is for isBarriar     
+        } 
+        squars.push(tmp_squars_line);      
+    }
+    printSquares(squars);
+}
+//make the animation of sqaure been choosen
+function draw_square(point) {
+    squars[point.x][point.y] = point.color;
+    ctx.fillStyle = point.color;
+    ctx.fillRect((point.x*width+width/4)-square_animation_index/2,
+                (point.y*height+height/4)-square_animation_index/2,
+                (width-seperate)/2+square_animation_index,
+                (height-seperate)/2+square_animation_index);
+    square_animation_index +=1;
+    if (square_animation_index > (height/2)-seperate) {
+        square_animation_index = 0;
+        //ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
+        clearInterval(animate_square);
+        return;
+    }
+}
 function clearBoard() {
     for (let i = 0; i < squars.length; i++) {
         for (let j = 0; j < squars[i].length; j++) {
@@ -72,7 +102,8 @@ function clearBoard() {
     }
 }
 function onClick(e) {
-    //index = 0;
+    square_animation_index = 0;
+    clearInterval(animate_square);
     pageShift = 65;
     clicX = e.pageX;
     clicY = e.pageY-pageShift;
@@ -90,8 +121,8 @@ function onClick(e) {
             }
             else if(full_line_mark && clicX >= x*width && clicX <= x*width+width-seperate)
             {
-                //squars[x][y] = "black";
-                update_square(new Point(x, y, "black"))
+                squars[x][y] = "black";
+                //update_square(new Point(x, y, "black"))
                 continue;
             }
             if (clicX >= x*width && clicX <= x*width+width-seperate 
@@ -119,39 +150,10 @@ function onClick(e) {
             }        
         }
     }
-    printSquares();
+    //printSquares();
     isChanged ? startExist = !startExist : false;
     isChanged = false;
     return false;
-}
-
-function draw_square(point) {
-    // ctx.fillStyle = "grey";
-    // ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
-
-    squars[point.x][point.y] = point.color;
-    ctx.fillStyle = point.color;
-    ctx.fillRect((point.x*width+width/4)-index/2, (point.y*height+height/4)-index/2, (width-seperate)/2+index, (height-seperate)/2+index);
-    index +=1;
-    if (index > (height/2)-seperate) {
-        index = 0;
-        clearInterval(animate_square);
-        return;
-    }
-}
-function init() {
-    //makes the squars
-    for (let i = 0; i < ctx.canvas.width/width; i++) {
-        tmp_squars_line = [];
-        for (let j = 0; j < ctx.canvas.height/height; j++) {
-            //ctx.fillRect(i+seperate, j+seperate, width, height);
-            tmp_squars_line.push(["grey"]); // i,j is location | false is for isBarriar     
-        } 
-        squars.push(tmp_squars_line);    
-           
-    }
-    printSquares(squars);
-    animate_square = setInterval(draw_square,1000/70,new Point(5,20,"black"));
 }
 function update_square(point) {
     animate_square = setInterval(draw_square,1000/70,point);
