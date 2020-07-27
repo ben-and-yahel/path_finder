@@ -8,6 +8,7 @@ window.onload =function() {
     dynamicallyLoadScript("cost_algorithem.js");
     dynamicallyLoadScript("button_functions.js");
     dynamicallyLoadScript("path_draw.js");
+    dynamicallyLoadScript("star_algorithm.js");
 
     document.addEventListener("keypress",draw_path);
     document.oncontextmenu = onClick;

@@ -42,6 +42,6 @@ function draw_animation() {
         }
         stage_index +=1;
         printSquares();
-    }, 1000/10);
+    }, 1000/12);
 
 }
