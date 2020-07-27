@@ -161,8 +161,6 @@ function onClick(e) {
 }
 function update_square(point) {
     animate_square = setInterval(draw_square,1000/animation_rate,point);
-    // ctx.fillStyle = point.color;
-    // ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
 }
 //for loop on every item and show it on the canvas
 function printSquares() {
