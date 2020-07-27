@@ -159,11 +159,11 @@
                  bestTrace = new Node(end,n);
                  exit = false;
              }
-             firsts.forEach(first => {//checking for false run - removing create a minor bug
-                 if(/*!(first[0].point in removed) && */first[0].point.x == n.point.x && first[0].point.y == n.point.y){
+             for(var first = 0;first < firsts.length;first++){//checking for false run - removing create a minor bug
+                 if(/*!(first[0].point in removed) && */firsts[first][0].point.x == n.point.x && firsts[first][0].point.y == n.point.y){
                      NodesArray.splice(i,1);
                  }
-             });
+             }
              i++;
          });
      }
