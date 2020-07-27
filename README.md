@@ -9,6 +9,7 @@ none! (google chrome)
 ## How to use:
 
 ![using description](https://raw.githubusercontent.com/ben-and-yahel/path_finder/master/Hnet-image.gif)
+
 first, choose the start and end point by clicking the right-button on a square. the click will mark the start in blue and the end in red. Now enter some barriers by clicking on the left-button on a square. the click will make black and our path could'et make the way throw them. activate: to activate hit any button on your keyboard.
 **activate:**
 to activate hit any button on your keyboard.
