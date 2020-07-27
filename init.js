@@ -96,7 +96,7 @@ function onClick(e) {
                     if (e.button == 2) {
                         //if there is start so it gone to red for end
                         if (startExist) {
-                            squars[x][y] =  "reניגשתd";
+                            squars[x][y] =  "red";
                             end = new Point(x, y);
                         }
                         
