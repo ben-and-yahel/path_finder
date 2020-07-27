@@ -4,6 +4,7 @@ html, body {
     margin: 0;
             } 
 #reload{
+  user-select: none;
   position: absolute;
   display: inline-block;
   left: 520px;
@@ -57,6 +58,7 @@ html, body {
     font-family: Comic Sans MS;
 }
 .dropbtn {
+  user-select: none;
     background-color: #7755a3;
     color: white;
     padding: 14px;

@@ -60,6 +60,7 @@
        NodesArray[index].upgrade();
        tmp_stage.push(NodesArray[index].point);//mark the way:)
      }
+     //for the visualtion
      algorithem_mind.push([tmp_stage]);
          
      return NodesArray;
@@ -144,7 +145,6 @@
              });
              i++;
          });
-         //printSquares();
      }
      //alert("time took: "+(time2.getMilliseconds()-time1.getMilliseconds())+" mill sec");
      return bestTrace;

@@ -191,6 +191,9 @@ function draw_path() {
         case 1:
             result = A_algorithm();
             break;
+        case 2:
+            result = star_algorithm();
+            break;
         default:
             break;
     }
