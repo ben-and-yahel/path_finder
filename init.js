@@ -50,7 +50,7 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 20;
+height = width = 80;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
@@ -62,6 +62,7 @@ stage_index = 0;
 full_line_mark = false;
 square_animation_index = 0;
 animate_square = undefined;
+animation_rate = 70;
 // ----------------init functions--------------------
 
 function init() {
@@ -70,6 +71,7 @@ function init() {
         tmp_squars_line = [];
         for (let j = 0; j < ctx.canvas.height/height; j++) {
             //ctx.fillRect(i+seperate, j+seperate, width, height);
+            //TODO: change all the code to points instead of just string
             tmp_squars_line.push(["grey"]); // i,j is location | false is for isBarriar     
         } 
         squars.push(tmp_squars_line);      
@@ -117,12 +119,11 @@ function onClick(e) {
                 else if (squars[x][y] == "red" && startExist) {
                     squars[x][y] = "grey";
                 }
-                printSquares();
             }
             else if(full_line_mark && clicX >= x*width && clicX <= x*width+width-seperate)
             {
-                squars[x][y] = "black";
                 //update_square(new Point(x, y, "black"))
+                squars[x][y] = "black";
                 continue;
             }
             if (clicX >= x*width && clicX <= x*width+width-seperate 
@@ -140,6 +141,9 @@ function onClick(e) {
                         }
                         isChanged = true;// if endpoint is set we update it in the end of the func
                     }
+                    // else if (squars[x][y] == "#0000ff" || squars[x][y] == "#00ccff" || squars[x][y] == "#00ff99") {
+                    //     break;
+                    // }
                     else if (squars[x][y] != "grey") {
                         update_square(new Point(x, y, "grey"))
                     }
@@ -156,7 +160,7 @@ function onClick(e) {
     return false;
 }
 function update_square(point) {
-    animate_square = setInterval(draw_square,1000/70,point);
+    animate_square = setInterval(draw_square,1000/animation_rate,point);
     // ctx.fillStyle = point.color;
     // ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
 }
