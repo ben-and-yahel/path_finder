@@ -20,7 +20,7 @@ window.onload =function() {
 }
 
 class Point{
-    constructor(x, y, color){
+    constructor(x, y, color="grey"){
         this.x = x;
         this.y = y;
         this.color = color;
@@ -99,7 +99,6 @@ function onClick(e) {
                             squars[x][y] =  "red";
                             end = new Point(x, y);
                         }
-                        
                         else
                         {
                             squars[x][y] = "blue"; 
@@ -108,9 +107,11 @@ function onClick(e) {
                         isChanged = true;// if endpoint is set we update it in the end of the func
                     }
                     else if (squars[x][y] != "grey") {
+                        
                         squars[x][y] = "grey";
                     }
                     else{
+                        
                         squars[x][y] = "black";
                     }
                     
@@ -122,6 +123,21 @@ function onClick(e) {
     isChanged = false;
     return false;
 }
+index = 0;
+function draw_square(point) {
+    // ctx.fillStyle = "grey";
+    // ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
+
+    squars[point.x][point.y] = point.color;
+    ctx.fillStyle = point.color;
+    ctx.fillRect((point.x*width+width/4)-index/2, (point.y*height+height/4)-index/2, (width-seperate)/2+index, (height-seperate)/2+index);
+    index +=1;
+    if (index > (height/2)-seperate) {
+        index = 0;
+        clearInterval(animate_square);
+        return;
+    }
+}
 function init() {
     //makes the squars
     for (let i = 0; i < ctx.canvas.width/width; i++) {
@@ -130,9 +146,16 @@ function init() {
             //ctx.fillRect(i+seperate, j+seperate, width, height);
             tmp_squars_line.push(["grey"]); // i,j is location | false is for isBarriar     
         } 
-        squars.push(tmp_squars_line);       
+        squars.push(tmp_squars_line);    
+           
     }
     printSquares(squars);
+    animate_square = setInterval(draw_square,1000/70,new Point(5,20,"black"));
+}
+function update_square(point) {
+    animate_square = setInterval(draw_square,1000/70,point);
+    // ctx.fillStyle = point.color;
+    // ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
 }
 //for loop on every item and show it on the canvas
 function printSquares() {
