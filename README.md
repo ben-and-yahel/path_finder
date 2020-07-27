@@ -29,3 +29,4 @@ we have pleanty feachers in our pathfinder.
 ## what we learn from this project?
 
 In this project, we learn a new language: javascript, and we sharped our algorithms thinking skills.
+We also learn how to use css positoning and html basic use. We very enjoind from this project because it's intuitiv and fun to show and use.**Very recommended**
