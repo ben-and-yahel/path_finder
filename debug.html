@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="http://example.com/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Path finder</title>
+    <title>(Debug) Path Finder</title>
 </head>
 <body>
     
@@ -26,7 +27,13 @@
       </div>
 
     <canvas id="gc" onclick="onClick(event);"></canvas>
-    <script src="init.js" > </script>
-    <script>debug_mode = true;</script>
+    <script>var debug_mode = true;</script>
+    <script src="init.js" >;</script>
+    <script>
+      let txt = "Animation &#973";
+      isAnimate = !isAnimate;
+      document.getElementById("animation").innerHTML = !isAnimate? txt+"4;":  txt+"3;";
+    </script>
+    
 </body>
 </html>

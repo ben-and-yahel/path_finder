@@ -52,7 +52,7 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 50;
+height = width = 30;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
@@ -65,7 +65,7 @@ full_line_mark = false;
 square_animation_index = 0;
 animate_square = undefined;
 animation_rate = 70;
-debug_mode = false;
+//debug_mode = false;
 // ----------------init functions--------------------
 
 function init() {
