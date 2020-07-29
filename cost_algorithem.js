@@ -41,11 +41,16 @@
  */
  function ExpandArray(ExpendedNode)
  {
+    
      let NodesArray = [];
      let width = squars.length;
      let height = squars[0].length;
      let x = ExpendedNode.point.x;
      let y = ExpendedNode.point.y;
+     if (debug_mode) {
+        h = document.getElementById("welcome");
+        h.innerHTML  = "y:"+y+" x:"+x+" F: "+Math.floor(ExpendedNode.point.F_cost)+" H: "+Math.floor(ExpendedNode.point.H_cost);
+    }
      //check if posible to go there and then create and push a new node
      if(x-1 >= 0 && squars[x-1][y] != "black" && haventBeenThere(x-1,y,ExpendedNode))
          NodesArray.push(new Node(new Point(x-1,y,"green"),ExpendedNode));
@@ -127,6 +132,8 @@
  {
      let firsts = [];
      let startNode = new Node(start,null);
+     if(haveReachTheEnd(startNode))
+        return null
      let NodesArray = ExpandArray(startNode);//initiate the nodews array with the start point
      // startNode => start || NodesArray => [up, down, left, right]
      let bestTrace = null; 

@@ -16,7 +16,20 @@ to activate hit any button on your keyboard.
 
 # The algorithm
 
-cost algorithm - 
+**A* algorithm** - The A* path finder algorithm looks at the start and the end point and see what is the way betwen the two point. It doing so by calculating 3 values:
+**G cost:** The distance between a point to the start point
+**H cost:** The distance between a point to the end point
+**F cost:** The sum of G cost and H cost
+then the algorithm expand the start point to it's neighbores and follow the path with the lowest F cost.
+
+In our code the paths that the algorithm checks are stored by an array of linked lists when every list is a diffrent path. 
+
+The array is then sorted by the F and H cost(tells us who is closer to the end) and with the closer node we expanding our array. 
+
+The expansion of the nodes is made by the function ExpandArray which create 4 new routs in which the path can grow to. 
+When the new paths our made the function then calls the upgrade function on the new nodes which calculate the new costs.
+
+The function stops when the end point was found or if there is nowhere else to go to(there is no path between the start and the end points). 
 
 ## bonuses:
 
