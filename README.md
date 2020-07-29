@@ -15,11 +15,11 @@ to activate hit any button on your keyboard.
 
 # The algorithm
 
-A* algorithm - The A* path finder algorithm looks at the start and the end point and see what is the way betwen the two point. It doing so by calculating 3 values:
-G cost: The distance between a point to the start point
-H cost: The distance between a point to the end point
-F cost: The sum of G cost and H cost
-then the algorithm expand the start point to it's neighbores and follow he path with the lowest F cost.
+**A* algorithm** - The A* path finder algorithm looks at the start and the end point and see what is the way betwen the two point. It doing so by calculating 3 values:
+**G cost:** The distance between a point to the start point
+**H cost:** The distance between a point to the end point
+**F cost:** The sum of G cost and H cost
+then the algorithm expand the start point to it's neighbores and follow the path with the lowest F cost.
 
 In our code the paths that the algorithm checks are stored by an array of linked lists when every list is a diffrent path. 
 
