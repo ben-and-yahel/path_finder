@@ -65,7 +65,8 @@ full_line_mark = false;
 square_animation_index = 0;
 animate_square = undefined;
 animation_rate = 70;
-var cornerRadius = 15;
+cornerRadius = 15;
+var debug_mode; // declare it because debug.html declare it anyways
 // ----------------init functions--------------------
 
 function init() {
