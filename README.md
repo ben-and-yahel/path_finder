@@ -15,9 +15,14 @@ first, choose the start and end point by clicking the right-button on a square. 
 **activate:**
 to activate hit any button on your keyboard.
 
-# The algorithm
+# The algorithms
 
-A algorithm* - The A* path finder algorithm looks at the start and the end point and see what is the way betwen the two point. It doing so by calculating 3 values: G cost: The distance between a point to the start point H cost: The distance between a point to the end point F cost: The sum of G cost and H cost then the algorithm expand the start point to it's neighbores and follow the path with the lowest F cost.
+**A* algorithm** - The A* path finder algorithm looks at the start and the end point and see what is the way betwen the two point. 
+It doing so by calculating 3 values: 
+**G cost:** The distance between a point to the start point 
+**H cost:** The distance between a point to the end point 
+**F cost:** The sum of G cost and H cost 
+then the algorithm expand the start point to it's neighbores and follow the path with the lowest F cost.
 
 In our code the paths that the algorithm checks are stored by an array of linked lists when every list is a diffrent path.
 
@@ -26,6 +31,12 @@ The array is then sorted by the F and H cost(tells us who is closer to the end) 
 The expansion of the nodes is made by the function ExpandArray which create 4 new routs in which the path can grow to. When the new paths our made the function then calls the upgrade function on the new nodes which calculate the new costs.
 
 The function stops when the end point was found or if there is nowhere else to go to(there is no path between the start and the end points).
+
+
+**Star algorithm** - As its name suggest' the star algorithm expand himself each time one step forward, one step backward, one step left and one step right.
+These algorithm is going like brute force and expand himself quickly across the board.
+
+The code here use the idea on which the A* algorithm was built - its using nodes to store its expansion but the major difference between the codes is that the star algorithm's code erases his past steps and stores only the most expanded nodes.
 
 ## bonuses:
 
