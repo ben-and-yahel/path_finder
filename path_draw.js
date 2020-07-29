@@ -9,8 +9,8 @@ function animation_interval() {
     printSquares();
 }
 function draw_animation() {
-    if(algorithem_number != 2)
-        algorithem_mind.splice(-1,1);
+    /*if(algorithem_number != 2)
+        algorithem_mind.splice(-1,1);*/
     let light_tmp_stage = [];
     let dark_tmp_stage = [];
     var draw = setInterval(function () {

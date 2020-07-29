@@ -132,6 +132,8 @@
  {
      let firsts = [];
      let startNode = new Node(start,null);
+     if(haveReachTheEnd(startNode))
+        return null
      let NodesArray = ExpandArray(startNode);//initiate the nodews array with the start point
      // startNode => start || NodesArray => [up, down, left, right]
      let bestTrace = null; 
