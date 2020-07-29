@@ -26,6 +26,7 @@ we have pleanty feachers in our pathfinder.
 3. animation - choose whenever you'd like to see how the algorithm thinks
 4. template - generate a template for the algorithm
 5. select row - a tool for select a whole row
+debug.html - the same site bug with debug mode turns on, it add some debug functions for us
 ## what we learn from this project?
 
 In this project, we learn a new language: javascript, and we sharped our algorithms thinking skills.
