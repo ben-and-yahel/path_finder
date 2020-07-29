@@ -12,9 +12,9 @@ function template() {
     if (end != undefined) {
         squars[end.x][end.y] = "grey";
     }
-    for (let i = 0; i < squars.length; i+=2) {
-        for (let j = 0; j < squars[i].length-1; j+=2) {
-            squars[i][j] = color;
+    for (let x = 0; x < squars.length; x+=3) {
+        for (let y = 0; y < squars[x].length-1; y+=3) {
+            squars[x][y] = color;
         }
     }
     squars[1][0] = "blue";
@@ -29,4 +29,4 @@ function algorithem(number) {
 }
 function row() {
     full_line_mark = !full_line_mark;
-}
+} 

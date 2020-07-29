@@ -8,6 +8,7 @@ window.onload =function() {
     dynamicallyLoadScript("cost_algorithem.js");
     dynamicallyLoadScript("button_functions.js");
     dynamicallyLoadScript("path_draw.js");
+    dynamicallyLoadScript("star_algorithm.js");
 
     document.addEventListener("keypress",draw_path);
     document.oncontextmenu = onClick;
@@ -20,7 +21,7 @@ window.onload =function() {
 }
 
 class Point{
-    constructor(x, y, color){
+    constructor(x, y, color="grey"){
         this.x = x;
         this.y = y;
         this.color = color;
@@ -28,19 +29,25 @@ class Point{
         this.G_cost = 0;//distance between the start point and another point
         this.F_cost = 0;// the sum of g cost and h cost
     }
-    upgrade() {
+    upgrade(depth) {
         this.H_cost = calculateHcost(this);
         this.G_cost = calculateGcost(this);
-        this.F_cost = this.H_cost*0.6 + this.G_cost*0.4;
+        this.G_cost = (this.G_cost + depth*100) / 2.0;
+        this.F_cost = this.H_cost*0.7 + this.G_cost*0.3;
     }
 }
 class Node{
     constructor(p,n){
         this.point = p;
         this.node = n;
+        this.depth = 0;
+        if(n != null)
+        {
+            this.depth = n.depth + 1;
+        }
     }
     upgrade() {
-        this.point.upgrade();
+        this.point.upgrade(this.depth);
     }
 
 }
@@ -55,7 +62,46 @@ isAnimate = true;
 algorithem_number = 1;
 stage_index = 0;
 full_line_mark = false;
+square_animation_index = 0;
+animate_square = undefined;
+animation_rate = 70;
+cornerRadius = 15;
+var debug_mode; // declare it because debug.html declare it anyways
 // ----------------init functions--------------------
+
+function init() {
+    //makes the squars
+    for (let i = 0; i < ctx.canvas.width/width; i++) {
+        tmp_squars_line = [];
+        for (let j = 0; j < ctx.canvas.height/height; j++) {
+            //ctx.fillRect(i+seperate, j+seperate, width, height);
+            //TODO: change all the code to points instead of just string
+            tmp_squars_line.push(["grey"]); // i,j is location | false is for isBarriar     
+        } 
+        squars.push(tmp_squars_line);      
+    }
+    printSquares(squars);
+}
+//make the animation of sqaure been choosen
+function draw_square(point) {
+    squars[point.x][point.y] = point.color;
+    ctx.fillStyle = point.color;
+    ctx.strokeStyle = point.color;
+    ctx.fillRect((point.x*width+width/4)-square_animation_index/2,
+                (point.y*height+height/4)-square_animation_index/2,
+                (width-seperate)/2+square_animation_index,
+                (height-seperate)/2+square_animation_index);
+    square_animation_index +=1;
+    if (square_animation_index > (height/2)-seperate-6) {
+        square_animation_index = 0;
+
+        // ctx.strokeRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
+        // ctx.fillRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
+        ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
+        clearInterval(animate_square);
+        return;
+    }
+}
 function clearBoard() {
     for (let i = 0; i < squars.length; i++) {
         for (let j = 0; j < squars[i].length; j++) {
@@ -66,11 +112,12 @@ function clearBoard() {
     }
 }
 function onClick(e) {
+    square_animation_index = 0;
+    clearInterval(animate_square);
     pageShift = 65;
     clicX = e.pageX;
     clicY = e.pageY-pageShift;
     isChanged = false;
-
     for (let x = 0; x < squars.length; x++) {
         for (let y = 0; y < squars[x].length; y++) {
             if (e.button==2 && (squars[x][y] == "blue" || squars[x][y] == "red")) {
@@ -80,10 +127,10 @@ function onClick(e) {
                 else if (squars[x][y] == "red" && startExist) {
                     squars[x][y] = "grey";
                 }
-                printSquares();
             }
             else if(full_line_mark && clicX >= x*width && clicX <= x*width+width-seperate)
             {
+                //update_square(new Point(x, y, "black"))
                 squars[x][y] = "black";
                 continue;
             }
@@ -92,22 +139,27 @@ function onClick(e) {
                     if (e.button == 2) {
                         //if there is start so it gone to red for end
                         if (startExist) {
-                            squars[x][y] =  "red";
-                            end = new Point(x, y);
+                            end = new Point(x, y, "red");
+                            update_square(end);
                         }
                         else
                         {
-                            squars[x][y] = "blue"; 
-                            start = new Point(x, y);
+                            start = new Point(x, y, "blue");
+                            update_square(start);
                         }
                         isChanged = true;// if endpoint is set we update it in the end of the func
                     }
                     else if (squars[x][y] != "grey") {
-                        squars[x][y] = "grey";
+                        update_square(new Point(x, y, "grey"));
                     }
+                    //the squre is grey and about to be black
                     else{
-                        squars[x][y] = "black";
-                        
+                        if (debug_mode) {
+                            h = document.getElementById("welcome");
+                            h.innerHTML  = "y:"+y+" x:"+x;
+                        }
+                        //calc_HGF_cost(x,y);
+                        update_square(new Point(x, y, "black"));
                     }
                     
             }        
@@ -118,17 +170,8 @@ function onClick(e) {
     isChanged = false;
     return false;
 }
-function init() {
-    //makes the squars
-    for (let i = 0; i < ctx.canvas.width/width; i++) {
-        tmp_squars_line = [];
-        for (let j = 0; j < ctx.canvas.height/height; j++) {
-            //ctx.fillRect(i+seperate, j+seperate, width, height);
-            tmp_squars_line.push(["grey"]); // i,j is location | false is for isBarriar     
-        } 
-        squars.push(tmp_squars_line);       
-    }
-    printSquares(squars);
+function update_square(point) {
+    animate_square = setInterval(draw_square,1000/animation_rate,point);
 }
 //for loop on every item and show it on the canvas
 function printSquares() {
@@ -138,12 +181,27 @@ function printSquares() {
         for (let j = 0; j < squars[i].length; j++) {
             color = squars[i][j];
             ctx.fillStyle = color;
+            // ctx.lineJoin = "round";
+            // ctx.lineWidth = 10;
+            // if (squars[i][j] == "#003366" ||squars[i][j] == "#00ccff" ||squars[i][j] == "#0099cc" ||squars[i][j] == "#00ff99" ) {
+            //     //ctx.fillStyle = "white";
+            //     //ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
+            //     ctx.fillStyle = color;
+            //     ctx.beginPath();
+            //     ctx.arc(((i*width)-width/2) +width*2 + seperate, ((j*height)-height/2) + height*2+seperate, width/4, 0, 2 * Math.PI);
+            //     ctx.fill();
+            // }
             ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
         }
     }
 }
 
-function draw_path(e) {
+function draw_path() {
+
+    if (end == undefined) {
+        alert("please enter start and end point(right mouse click)!");
+        return;
+    }
     stage_index = 0;
     clearBoard();
     algorithem_mind = [];
@@ -152,6 +210,9 @@ function draw_path(e) {
     switch (algorithem_number) {
         case 1:
             result = A_algorithm();
+            break;
+        case 2:
+            result = star_algorithm();
             break;
         default:
             break;

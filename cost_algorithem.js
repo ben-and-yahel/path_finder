@@ -60,6 +60,7 @@
        NodesArray[index].upgrade();
        tmp_stage.push(NodesArray[index].point);//mark the way:)
      }
+     //for the visualtion
      algorithem_mind.push([tmp_stage]);
          
      return NodesArray;
@@ -78,7 +79,7 @@
                  nodeArray[Y + 1] = nodeArray[Y];
                  nodeArray[Y] = temp;
              }
-             else if((nodeArray[Y].point.F_cost == nodeArray[Y + 1].point.F_cost) && (nodeArray[Y].point.H_cost < nodeArray[Y + 1].point.H_cost))
+             else if((nodeArray[Y].point.F_cost == nodeArray[Y + 1].point.F_cost) && nodeArray[Y].point.H_cost > nodeArray[Y + 1].point.H_cost)
              {
                  let temp = nodeArray[Y + 1];
                  nodeArray[Y + 1] = nodeArray[Y];
@@ -86,19 +87,37 @@
              }
          }
      }
-   //   let f = nodeArray[0].point.F_cost;
-   //   for (let X = 0; X < nodeArray.length; X++) {
-   //       for (let Y = 0; Y < nodeArray.length - 1; Y++) {
-   //           if((nodeArray[Y].point.F_cost == f) && (nodeArray[Y].point.H_cost > nodeArray[Y + 1].point.H_cost))
-   //           {
-   //               let temp = nodeArray[Y + 1];
-   //               nodeArray[Y + 1] = nodeArray[Y];
-   //               nodeArray[Y] = temp;
-   //           }
-             
-   //       }
-   //   }
+
      return nodeArray;
+ }
+ function removeRepeaters(nodeArrayToCheck)
+ {
+     removed = [];
+     for (let index = 0; index < nodeArrayToCheck.length; index++) {
+        for (let index2 = 0; index2 < nodeArrayToCheck.length; index2++) {
+            if(index == index2){
+                continue;
+            }
+            let temp = nodeArrayToCheck[index2];
+            let d = nodeArrayToCheck[index2].depth;
+            while(temp){
+                let x2 = temp.point.x;
+                let y2 = temp.point.y;
+                if(nodeArrayToCheck[index].point.x == x2 && nodeArrayToCheck[index].point.y == y2 && nodeArrayToCheck[index].depth < d)
+                {
+                    nodeArrayToCheck.splice(index2,1);
+                    removed.push(nodeArrayToCheck[index].point);
+                    index = 0;
+                    index2 = -1;
+                    temp = null;
+                }
+                else{
+                    temp = temp.node;
+                }
+            }
+        }
+     }
+     return removed;
  }
  /*
  main function of the algorithm
@@ -127,24 +146,26 @@
              alert("no path avalible!");
              continue;
          }
+        //let removed = removeRepeaters(NodesArray);
+
          NodesArray = sortByFcost(NodesArray);//searching for the closest to the end
          tempNodeArray = ExpandArray(NodesArray[0]);
          firsts.push(NodesArray.splice(0,1)); // array: [1,2,3,4] splice(0,1) : [1]
          NodesArray.push.apply(NodesArray,tempNodeArray);//adding next gen
          var i = 0;
+
          NodesArray.forEach(n => {//making progress, sign it and check if finish
              if(haveReachTheEnd(n)){
                  bestTrace = new Node(end,n);
                  exit = false;
              }
-             firsts.forEach(first => {//checking for false run - removing create a minor bug
-                 if(first[0].point.x == n.point.x && first[0].point.y == n.point.y){
+             for(var first = 0;first < firsts.length;first++){//checking for false run - removing create a minor bug
+                 if(/*!(first[0].point in removed) && */firsts[first][0].point.x == n.point.x && firsts[first][0].point.y == n.point.y){
                      NodesArray.splice(i,1);
                  }
-             });
+             }
              i++;
          });
-         //printSquares();
      }
      //alert("time took: "+(time2.getMilliseconds()-time1.getMilliseconds())+" mill sec");
      return bestTrace;
