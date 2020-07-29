@@ -59,7 +59,7 @@ squars = []; // square => [color]
 startExist = false;
 start = end = undefined;
 isAnimate = true;
-algorithem_number = 1;
+algorithem_number = 2;
 stage_index = 0;
 full_line_mark = false;
 square_animation_index = 0;
