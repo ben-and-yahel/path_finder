@@ -3,7 +3,7 @@
 Hi! well, you probably saw a Thousand like that. And for a very good reason! it's such a fun project!
 # what is it?
 
-well for the folks who don't know what pathfinding is, it basically a bunch of squares with barriers between them and an algorithm how tries to navigate between them from point A to B.
+well for the folks who don't know what pathfinding is, it basically a bunch of squares with barriers between them and an algorithm that tries to navigate between them from point A to B.
 ## Prerequisites
 none! (google chrome)
 ## How to use:
