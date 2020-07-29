@@ -52,7 +52,7 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 40;
+height = width = 20;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
@@ -111,6 +111,7 @@ function clearBoard() {
         }
     }
 }
+/*TODO: require doc!! */
 function onClick(e) {
     square_animation_index = 0;
     clearInterval(animate_square);
@@ -181,16 +182,6 @@ function printSquares() {
         for (let j = 0; j < squars[i].length; j++) {
             color = squars[i][j];
             ctx.fillStyle = color;
-            // ctx.lineJoin = "round";
-            // ctx.lineWidth = 10;
-            // if (squars[i][j] == "#003366" ||squars[i][j] == "#00ccff" ||squars[i][j] == "#0099cc" ||squars[i][j] == "#00ff99" ) {
-            //     //ctx.fillStyle = "white";
-            //     //ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
-            //     ctx.fillStyle = color;
-            //     ctx.beginPath();
-            //     ctx.arc(((i*width)-width/2) +width*2 + seperate, ((j*height)-height/2) + height*2+seperate, width/4, 0, 2 * Math.PI);
-            //     ctx.fill();
-            // }
             ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
         }
     }
@@ -218,15 +209,14 @@ function draw_path() {
             break;
     }
     var t1 = performance.now()
-    if(result == null){
-        printSquares();
-        return;
-    }
-    alert("Call to doSomething took " + (t1 - t0)/1000 + " seconds.");
-    result = result.node;
+    if(result != null){
+        result = result.node;
     squars[end.x][end.y] = "red";
     squars[start.x][start.y] = "blue";
     path_result = result;
+    }
+    //alert("Call to doSomething took " + (t1 - t0)/1000 + " seconds.");
+    
     
     if (isAnimate) {
         draw_animation(result);
@@ -239,5 +229,4 @@ function draw_path() {
         }
         printSquares();
     }
-    
 }

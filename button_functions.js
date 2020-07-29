@@ -24,7 +24,18 @@ function template() {
     printSquares();
 }
 function algorithem(number) {
-    alert("you choose algorithem number "+number);
+    h = document.getElementById("algorithms");
+    switch (number) {
+        case 1:
+            h.innerHTML = "A* algorithm&#9773";
+            break;
+        case 2:
+            h.innerHTML = "Star algorithm";
+            break;
+        default:
+            break;
+    }
+    //alert("you choose algorithem number "+number);
     algorithem_number = number;
 }
 function row() {
