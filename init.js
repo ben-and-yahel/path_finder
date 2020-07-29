@@ -52,7 +52,7 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 30;
+height = width = 40;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [color]
@@ -206,7 +206,7 @@ function draw_path() {
     clearBoard();
     algorithem_mind = [];
     let result = [];
-
+    var t0 = performance.now()
     switch (algorithem_number) {
         case 1:
             result = A_algorithm();
@@ -217,11 +217,12 @@ function draw_path() {
         default:
             break;
     }
+    var t1 = performance.now()
     if(result == null){
         printSquares();
         return;
     }
-
+    alert("Call to doSomething took " + (t1 - t0)/1000 + " seconds.");
     result = result.node;
     squars[end.x][end.y] = "red";
     squars[start.x][start.y] = "blue";
